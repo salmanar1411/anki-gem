@@ -1,0 +1,16 @@
+{
+  "name": "anki-gemini",
+  "version": "1.0.0",
+  "description": "anki combination with AI",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "sam",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^5.1.0"
+  }
+}
