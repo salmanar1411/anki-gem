@@ -2,12 +2,16 @@
 
 <div class="mb-3">
     <label for="exampleFormControlTextarea1" class="form-label my-3">What do you want to learn</label>
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="15" name="input"></textarea>
+    <textarea class="form-control" id="exampleFormControlTextarea1" contenteditable="true" rows="15" name="input"></textarea>
 </div>
 
+<div class="output"></div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
-    const txt = "<%= JSON.stringify(content) %>";
+    // const txt = marked.parse("<%= JSON.stringify(content) %>"); //use marked.parse to handling markdown (*, \n etc) from gemini
+    const txt = "<%= JSON.stringify(content) %>"; 
     let i = 0;
 
     function typeWritter(){

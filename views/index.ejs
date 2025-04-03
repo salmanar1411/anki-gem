@@ -1,14 +1,25 @@
 <%- include("partials/header.ejs") %>
 
-<form action="/generate" class="px-5" method="POST">
+<form action="/generate" class="px-5 text-center" method="POST">
     <div class="mb-3">
-        <label for="exampleFormControlTextarea1" class="form-label my-3">What do you want to learn</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="input"></textarea>
+        <label for="exampleFormControlTextarea1" class="form-label my-3">Generate</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="input" placeholder="Describe what you want to learn"></textarea>
     </div>
-        <div class="col-auto">
-        <button type="submit" class="btn btn-primary mb-3">Generate</button>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary mb-3">Generate Input</button>
     </div>
 </form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    $(document).ready( () => {
+        $('.btn').hide();
+
+        $('textarea').on('input', event => {
+            (event.target.value != "") ? $('.btn').show() : $('.btn').hide();
+        });
+    });
+</script>
 
 <%- include("partials/footer.ejs") %>
 
