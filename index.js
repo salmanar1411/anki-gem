@@ -1,7 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
 import "dotenv/config"; // dotenv.config() => to read file from file .env
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import { GoogleGenAI } from "@google/genai";
 
 const app = express();
@@ -28,7 +27,8 @@ app.post("/generate", async (req, res) => {
    
     const response = await main(content);
 
-    res.json({message: "in generate now", content: response.text});
+    // res.json({message: "in generate now", content: response.text});
+    res.render("generate.ejs", {content: response.text});
 });
 
 app.listen(port, () => {
