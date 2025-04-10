@@ -1,9 +1,14 @@
 <%- include("partials/header.ejs") %>
 
-<div class="mb-3">
-    <label for="exampleFormControlTextarea1" class="form-label my-3">What do you want to learn</label>
-    <textarea class="form-control" id="exampleFormControlTextarea1" contenteditable="true" rows="15" name="input"></textarea>
-</div>
+<form action="/generate/create" class="px-5 text-center" method="POST">
+    <div class="mb-3 text-center">
+        <label for="exampleFormControlTextarea1" class="form-label my-3 fw-bold fs-4">Prompt editor</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="15" name="content"></textarea>
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary mb-3 px-3 py-2 fw-bold fs-5">Create Flashcard</button>
+    </div>
+</form>
 
 <div class="output"></div>
 
