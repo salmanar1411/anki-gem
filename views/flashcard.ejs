@@ -1,10 +1,101 @@
 <%- include("partials/header.ejs") %>
 
-<div class="card" style="width: 18rem;">
-    <img src="..." class="card-img-top" alt="...">
-    <div class="card-body">
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    </div>
+<div class="d-flex flex-column align-items-center">
+  <div class="card my-3 col-auto border border-primary" style="width: 30rem; height: 15rem;">
+      <div class="card-body text-center align-content-center">
+        <h2 class="card-text"><%= flashcard[0].question %></h2>
+        <h4 class="card-text"><%= flashcard[0].answer %></h4>
+        <p class="card-text"><%= flashcard[0].explanation %></p>
+      </div>
+  </div>
+  <button type="button" class="show-answer btn btn-secondary px-2 fs-5">Show Answer</button>
+
+  <div class="flex-row">
+    <button type="button" data-answer="0" class="wrong-answer check btn btn-danger px-3 fs-5">Hard</button>
+    <button type="button" data-answer="1" class="right-answer check btn btn-success px-3 fs-5">Easy</button>
+  </div>
+
+  <button type="button" class="finish btn btn-primary my-3 px-5 fs-2">Finish</button>
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script id="flashcard-data" type="application/json">
+  <%- JSON.stringify(flashcard) %>
+</script>
+
+<script>
+  // Access and parse the JSON
+  const flashcards = JSON.parse($("#flashcard-data").text());
+  let curIndex = 0;
+  var flashcardValue = [];
+
+  showQuestion();
+
+  $(".show-answer").on("click", () => {
+    showAnswer();
+  });
+
+  $(".check").on("click", (event) =>{
+    const value = parseInt(event.currentTarget.dataset.answer);
+    flashcardValue.push(value);
+
+    if (curIndex < flashcards.length - 1){
+      showQuestion();
+    }
+    else if (curIndex === flashcards.length){
+      finish();
+    }
+
+    console.log("isi array: ", flashcardValue);
+    curIndex++;
+  })
+
+  $(".finish").on("click", () => {
+    fetch("/generate/finish", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({flashcardValue: flashcardValue})
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data.message);
+      window.location.href = "/";
+    });
+  });
+
+  function showQuestion(){
+    $(".finish").hide();
+    $(".show-answer").show();
+    $(".wrong-answer").hide();
+    $(".right-answer").hide();
+
+    $("h2").text(flashcards[curIndex].question).show();
+    $("h4").hide();
+    $("p").hide();
+  }
+
+  function showAnswer(){
+    $(".show-answer").hide();
+    $(".wrong-answer").show();
+    $(".right-answer").show();
+
+    $("h2").hide();
+    $("h4").text(flashcards[curIndex].answer).show();
+    $("p").text(flashcards[curIndex].explanation).show();
+  }
+
+  function finish(){
+    $(".finish").show();
+    $(".show-answer").hide();
+    $(".wrong-answer").hide();
+    $(".right-answer").hide();
+    $(".card").hide();
+
+    $("h2").hide();
+    $("h4").hide();
+    $("p").hide();
+  }
+</script>
 <%- include("partials/footer.ejs") %>
